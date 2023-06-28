@@ -1,18 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSON Display</title>
-    <style>
-        pre {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
+  <title>Interactive HTML Table</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+  </style>
 </head>
 <body>
-    <pre id="json-display"></pre>
+  <table id="myTable">
+    <thead>
+      <tr>
+        <th>caption</th>
+        <th>url</th>
+        <th>timestamp</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-    <script src="script.js"></script>
+  <script>
+    // Load JSON data from file
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = document.querySelector('#myTable tbody');
+
+        data.forEach(item => {
+          const row = document.createElement('tr');
+          const nameCell = document.createElement('td');
+          nameCell.textContent = item.caption;
+          row.appendChild(nameCell);
+
+          const ageCell = document.createElement('td');
+          ageCell.textContent = item.url;
+          row.appendChild(ageCell);
+
+          const cityCell = document.createElement('td');
+          cityCell.textContent = item.timestamp;
+          row.appendChild(cityCell);
+
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  </script>
 </body>
 </html>
